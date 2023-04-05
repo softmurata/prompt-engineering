@@ -176,6 +176,7 @@ INPUT: a city turned into a nuclear wasteland
 
 ## Task Planning Classification
 1. Few shot prompt engineering
+input:
 ```
 I want to do task planning classification. Task planning classes include 4 class: Image captioning, Object detection, Recommendation Response, Statistic Analytics.Examples of Task planning for AI model are following. 
 
@@ -184,11 +185,65 @@ Text: This is the picture which describing products for cars. i want to understa
 Text: How many objects does this image include? Please tell me with image title. Task Planning: Object detection -> Image captioning -> Statistic Analytics -> Recommendation Response
 Text: This is the picture which describing the family camp. Please generate the description and the number of objects in this picture. Task Planning:
 ```
+output:
+```
+Image captioning + Object detection -> Statistic Analytics -> Recommendation Response
+```
 
 2. generate small datasets
+input:
 ```
 I want to get small 20 datasets for task planning classification. Class labels: Image Captioning, Object detection, Recommendation Response, Statistic Analytics.  Class labels can generate the combinations with some class labels, such as "Image captioning -> object detection", "Image captioning + Statistic Analytics -> Recommendation Response" or "Image captioning -> object detection -> Recommendation Response". Please use this format for the examples. \ Text: <sentence> Task Planning: <class labels>
 ```
+output:
+```
+Sure, here are 20 sample datasets for task planning classification:
+
+Text: Please describe the image and identify any objects in the picture. Task Planning: Image captioning -> Object detection
+Text: Analyze the data and provide insights on the sales performance of the company. Task Planning: Statistic Analytics -> Recommendation Response
+Text: I want to identify the people in this photo and provide information about their clothing. Task Planning: Object detection -> Image captioning
+Text: Provide recommendations for similar products based on the features of the item in the image. Task Planning: Object detection -> Recommendation Response
+Text: Please generate a description of this image and identify any relevant landmarks. Task Planning: Image captioning -> Recommendation Response
+Text: Analyze the customer feedback data and provide insights on their preferences. Task Planning: Statistic Analytics -> Recommendation Response
+Text: Identify the objects in the image and provide recommendations for their usage. Task Planning: Object detection -> Recommendation Response
+Text: Please generate a summary of the text document and provide statistical analysis of the content. Task Planning: Image captioning -> Statistic Analytics
+Text: I want to know how many people are in this image and provide their ages. Task Planning: Object detection -> Statistic Analytics
+Text: Analyze the website traffic data and provide insights on the user behavior. Task Planning: Statistic Analytics -> Recommendation Response
+Text: Please provide a description of the product and identify its key features. Task Planning: Image captioning -> Object detection
+Text: Identify the objects in the image and provide information about their historical significance. Task Planning: Object detection -> Recommendation Response
+Text: Analyze the financial data and provide insights on the profitability of the company. Task Planning: Statistic Analytics -> Recommendation Response
+Text: Please generate a summary of the research paper and provide recommendations for further study. Task Planning: Image captioning -> Recommendation Response
+Text: Identify the objects in the image and provide information about their cultural relevance. Task Planning: Object detection -> Recommendation Response
+Text: Please describe the image and provide information about any related events or news. Task Planning: Image captioning -> Recommendation Response
+Text: Analyze the social media data and provide insights on the user engagement. Task Planning: Statistic Analytics -> Recommendation Response
+Text: Identify the objects in the image and provide recommendations for their maintenance. Task Planning: Object detection -> Recommendation Response
+Text: Please generate a description of the scene and provide statistical analysis of the data. Task Planning: Image captioning -> Statistic Analytics
+Text: Analyze the market trends data and provide insights on the consumer behavior. Task Planning: Statistic Analytics -> Recommendation Response
+```
+
+## Recommendation Response Creation with multimodal
+input:
+```
+You act as a professional prompt generator.  Please generate response like the following. \ Input: {"object detection": {"chair": 0.997, "couch": 0.965, "table": [0.563, 0.674]}, "image caption": "kitchen room with european style"} Output: In this picture, there are 4 objects. 1 chair with score 99.7%, 1 couch with score 96.5% and 2 tables with score 56.3% and 67.4%. I performed object detection and image caption. and it looks like kitchen room with european style. \ Input: {"object detection": {"cat": 0.97, "dog": 0.83, "bird": [0.763, 0.68, 0.986], "giraffe": [0.95, 0.37]}, "image caption": "amazon animals in the zoo"} Output:
+```
+
+output:
+```
+In this picture, there are 4 animals. 1 cat with score 97%, 1 dog with score 83%, 3 birds with scores 76.3%, 68%, and 98.6%, and 2 giraffes with scores 95% and 37%. I performed object detection and image caption, and it looks like the animals are in the zoo, specifically Amazon animals.
+```
+
+
+input:
+```
+You act as a professional prompt generator.  Please generate response like the following. \ Input: {"object detection": {"chair": 0.997, "couch": 0.965, "table": [0.563, 0.674]}} Output: In this picture, there are 4 objects. 1 chair with score 99.7%, 1 couch with score 96.5% and 2 tables with score 56.3% and 67.4%. I performed object detection. and it looks like kitchen room with european style. \ Input: {"object detection": {"cat": 0.97, "dog": 0.83, "bird": [0.763, 0.68, 0.986], "giraffe": [0.95, 0.37]}} Output: In this picture, there are 4 animals. 1 cat with score 97%, 1 dog with score 83%, 3 birds with scores 76.3%, 68%, and 98.6%, and 2 giraffes with scores 95% and 37%. I performed object detection and image caption, and it looks like the animals are in the zoo, specifically Amazon animals. \ Input: {"object detection": {"human": [0.97, 0.65, 0.57], "tree": [0.83, 0.82], "bird": [0.763, 0.68], "car": [0.95, 0.67, 0.57], "bicycle": [0.95, 0.99]}} Output:
+```
+
+output:
+```
+In this picture, there are 5 objects. 3 humans with scores 97%, 65%, and 57%, 2 trees with scores 83% and 82%, 2 birds with scores 76.3% and 68%, 3 cars with scores 95%, 67%, and 57%, and 1 bicycle with scores 95% and 99%. I performed object detection, and it looks like a city street with people walking, trees lining the sidewalks, and cars and bicycles passing by.
+```
+
+output:
 
 ## refinement
 1. create some examples on your own
@@ -301,6 +356,8 @@ output:
 ```
 {"+": {"blue couch": 2, "chair": 2}, "-": {"TV": 1}, "→": {"-": {"table": 3}, "+": {"desk": 4}}}
 ```
+
+
 
 ## suggestion
 ### Preprocess
@@ -455,9 +512,14 @@ Suggested questionを出すためにchatgpt自身に質問を考えさせる。
 ### Stable diffusion
 
 
-## Format
+####  Interior decorator's first input
+I want you to act as an interior decorator. Tell me what kind of theme and design approach should be used for a room of my choice; bedroom, hall etc., provide suggestions on color schemes, furniture placement and other decorative options that best suit said theme/design approach in order to enhance aesthetics and comfortability within the space . My first request is "I am designing our living hall".
+
+
+## Desired Format for chatgpt
 ```
 Task description:
 Current input:
 Output indicator: 
+Negative Output: 
 ```

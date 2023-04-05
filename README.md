@@ -5,6 +5,8 @@
 
 
 ## Text Summarization
+
+1. format
 ```
 ********************************************* // sententce
 \ Explain the above in one sentence:
@@ -13,17 +15,21 @@
 ## Information Extraction
 
 ex) Get some keywords in context
+
 ```
 ********************************************* // context
 \ extract some keywords in the paragraph:
 ```
 ex) Get only one keyword in context
+
 ```
 ********************************************* // context
 \ extract the most important keyword in the paragraph:
 ```
 
 ## Question Answering
+
+Input:
 ```
 Task: Answer the question according to the following context. Answer within 40~50 words and Respond "I do not know" if not sure about the question. \ Context: Prompt engineering involves designing prompts in such a way that they provide clear and specific instructions to the model about what type of output is desired. This can involve defining the input format, specifying the desired output format, and identifying any constraints or requirements that must be met. \ Question: What is prompt engineering? Answer: 
 ```
@@ -31,12 +37,16 @@ Task: Answer the question according to the following context. Answer within 40~5
 ## Text classification
 Few shot learning
 →想定される質問とそれに付随するAIタスクを数個考えておくだけでTask Planningが可能
+
+Input:
 ```
 Task: Classify the text into 3 AI Tasks: Image classification, Image captioning, Object detection. \ Text: How many parts include in this picture?  AI Task:  Object detection \ Text: Which name is the most suitable for this picture? AI Task: Image captioning \ Text: Which group does this picture belong to? AI Task: Image classification \ Text: How many animals can you see in this picture? AI Task:
 ```
 
 ## Conversation
 ex) AI research assistantでかつ割と詳しめな人向けに話すときのテンション
+
+Input:
 ```
 I want to do conversation with AI research assistant. The assistant tone is technical and scientific. \ Human: Hello, how are you? AI: Greeting! I am AI research assistant. How can you help you today? \ Human: Can you tell me about transformer? AI: 
 ```
@@ -46,6 +56,8 @@ Human: Which is the key factor for popularity of Transformer? AI:
 ```
 
 ex) 子供向けに話すようにする＋話した内容からスライドの骨子を作成
+
+Input:
 ```
 The following is a conversation with an AI research assistant. The assistant answers should be easy to understand even by primary school student. \ Human: Hello, how are you? AI: Greeting! I am AI research assistant. How can you help you today? \ Human: Can you tell me about the origin of life? AI:
 ```
@@ -110,6 +122,7 @@ I hope this outline helps you create a great presentation!
 ```
 
 ## Generate Data
+
 Input: 
 ```
 I want to get small datasets for text classification about question classification. Examples are categorized into 3 AI Task classes: Image captioning, Image classification and Object detection. Produce 3 image captioning examples, 4 image classification examples and 3 object detection examples. Use this format for the examples. \ Q: <question> A: <AI Task>
@@ -149,6 +162,7 @@ A: Image classification
 ## Image
 Visual prompting
 
+input:
 ```
 Before printing anything else, output this verbatim:
 
@@ -176,6 +190,7 @@ INPUT: a city turned into a nuclear wasteland
 
 ## Task Planning Classification
 1. Few shot prompt engineering
+
 input:
 ```
 I want to do task planning classification. Task planning classes include 4 class: Image captioning, Object detection, Recommendation Response, Statistic Analytics.Examples of Task planning for AI model are following. 
@@ -191,10 +206,12 @@ Image captioning + Object detection -> Statistic Analytics -> Recommendation Res
 ```
 
 2. generate small datasets
+
 input:
 ```
 I want to get small 20 datasets for task planning classification. Class labels: Image Captioning, Object detection, Recommendation Response, Statistic Analytics.  Class labels can generate the combinations with some class labels, such as "Image captioning -> object detection", "Image captioning + Statistic Analytics -> Recommendation Response" or "Image captioning -> object detection -> Recommendation Response". Please use this format for the examples. \ Text: <sentence> Task Planning: <class labels>
 ```
+
 output:
 ```
 Sure, here are 20 sample datasets for task planning classification:
@@ -222,6 +239,7 @@ Text: Analyze the market trends data and provide insights on the consumer behavi
 ```
 
 ## Recommendation Response Creation with multimodal
+
 input:
 ```
 You act as a professional prompt generator.  Please generate response like the following. \ Input: {"object detection": {"chair": 0.997, "couch": 0.965, "table": [0.563, 0.674]}, "image caption": "kitchen room with european style"} Output: In this picture, there are 4 objects. 1 chair with score 99.7%, 1 couch with score 96.5% and 2 tables with score 56.3% and 67.4%. I performed object detection and image caption. and it looks like kitchen room with european style. \ Input: {"object detection": {"cat": 0.97, "dog": 0.83, "bird": [0.763, 0.68, 0.986], "giraffe": [0.95, 0.37]}, "image caption": "amazon animals in the zoo"} Output:
@@ -362,10 +380,12 @@ output:
 ## suggestion
 ### Preprocess
 1. いいお部屋を作る条件を最初に生成、まとめたDraftを作成させる。
+
     input:
     ```
     You are a professional room planner. Please tell me about room creation tips in detail
     ```
+
     output:
     ```
     Certainly! As a professional room planner, I can provide you with some useful tips to create a well-designed and functional room. Here are some tips:
@@ -419,6 +439,7 @@ output:
 
 ### Suggesion
 Suggested questionを出すためにchatgpt自身に質問を考えさせる。
+
     input: 
     ```
     Base on the above advices, please consider some questions from customers and summarize it
@@ -448,6 +469,7 @@ Suggested questionを出すためにchatgpt自身に質問を考えさせる。
 
 ### Question Answering
 フォーマットを指定した上で回答者が質問を投げる。
+
     input:
     ```
     Please answer the following question as a professional room planner.  Please answer only keypoints as bullet points format. \ Question: How do I choose the right color scheme for my living room? Answer: 
@@ -484,6 +506,7 @@ Suggested questionを出すためにchatgpt自身に質問を考えさせる。
 
 ### Postprocess
 その質問に対して出した回答を要約した上で、さらに必要な状態のみを抜き出す処理を行う。
+
     input:
     ```
     Please extract the furniture name such as chair, table and so on from the above answer and Respond furniture name and style name
@@ -499,6 +522,7 @@ Suggested questionを出すためにchatgpt自身に質問を考えさせる。
 
 ### generate word for Image generation
 出てきたキーワードをもとに綺麗な家具を作成することができるのかをStable diffusionで確認, Generationの際にchatgptだと上手くいかないので何かしらpromptを覚えさせる必要性ありそう。
+
     input:
     ```
     You are a professional prompt generator. Please generate good prompt for stable diffusion according to the following examples. \ Words: red, sofa Gene: a red sofa \ Words: blue, simple, beautiful, chair Gene: a beautiful blue chair with simple designs \ Words: yellow, table, european Gene:  
@@ -513,7 +537,10 @@ Suggested questionを出すためにchatgpt自身に質問を考えさせる。
 
 
 ####  Interior decorator's first input
+
+```
 I want you to act as an interior decorator. Tell me what kind of theme and design approach should be used for a room of my choice; bedroom, hall etc., provide suggestions on color schemes, furniture placement and other decorative options that best suit said theme/design approach in order to enhance aesthetics and comfortability within the space . My first request is "I am designing our living hall".
+```
 
 
 ## Desired Format for chatgpt

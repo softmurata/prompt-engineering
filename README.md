@@ -1,7 +1,8 @@
 # prompt-engineering
-
+[prompt engineering guide](https://github.com/dair-ai/Prompt-Engineering-Guide)
 [huggingGPT](https://arxiv.org/pdf/2303.17580.pdf)
 [awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
+
 
 
 ## Text Summarization
